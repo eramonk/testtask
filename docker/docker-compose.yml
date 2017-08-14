@@ -5,7 +5,7 @@ services:
     
   myapp:
     image: eramonk/todo:latest
-    container_name: todo 
+    container_name: todo
     ports:
       - 9050:9050
     network_mode: "host"
@@ -29,7 +29,7 @@ services:
       - 9200:9200
     network_mode: "host"
   elasticsearch2:
-    image: composetest_elasticsearch2
+#    image: composetest_elasticsearch2
     build: ./elastic
     environment:
       - cluster.name=docker-cluster
@@ -53,5 +53,5 @@ volumes:
   esdata2:
     driver: local
 
-networks:
-  esnet:
+#networks:
+#  esnet:
