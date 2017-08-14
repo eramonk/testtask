@@ -2,7 +2,8 @@ version: '2'
 services:
   redis:
     image: redis:latest
-    
+    ports:
+          - 6379:6379
   myapp:
     image: eramonk/todo:latest
     container_name: todo
