@@ -74,7 +74,7 @@ object Server extends Directives with JsonSupport {
           complete("<h1>test success</h1>")
         } ~ path("testelastic") {
           complete(Http().singleRequest(HttpRequest(GET, uri = "http://127.0.0.1:9200")))
-        } ~ path("redistest") {
+        } ~ path("testredis") {
           onSuccess(WebAction.processAction(TestRedis())) { x =>
             complete(s"<h1>$x</h1>")
           }
@@ -84,7 +84,7 @@ object Server extends Directives with JsonSupport {
 
     val bindingFuture = Http().bindAndHandle(route, "localhost", 9050)
 
-    println(s"Server online at http://localhost:9000/index\nPress RETURN to stop...")
+    println(s"Server online at http://localhost:9050/index\nPress RETURN to stop...")
     //    StdIn.readLine() // let it run until user presses return
     //    bindingFuture
     //      .flatMap(_.unbind()) // trigger unbinding from the port
