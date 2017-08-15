@@ -3,25 +3,20 @@ services:
   redis:
     image: redis:latest
 #    container_name: redis
-    ports:
-          - 6379:6379
-    expose:
-      - "6379"
+    network_mode: "host"
+#    ports:
+#          - 6379:6379
+#    expose:
+#      - "6379"
   myapp:
     image: eramonk/todo:latest
+#
+#    expose:
+#      - "9050"
+    ports:
+      - 9050:9050
+    network_mode: "host"
 
-    expose:
-      - "9050"
-#    container_name: todo
-#    ports:
-#      - 9050:9050
-#    network_mode: "host"
-    links:
-      - redis
-      - elasticsearch
-
-
-   
   elasticsearch:
     image: elasticsearch
     build: ./elasticsearch
@@ -37,11 +32,12 @@ services:
 #    mem_limit: 1g
     volumes:
       - esdata1:/usr/share/elasticsearch/data
-    expose:
-       - "9200"
-    ports:
-      - 9200:9200
-      - 9300:9300
+    network_mode: "host"
+#    expose:
+#       - "9200"
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
 
 volumes:
   esdata1:

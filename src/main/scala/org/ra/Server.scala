@@ -71,12 +71,12 @@ object Server extends Directives with JsonSupport {
             complete(WebAction.showTasks())
           }
         } ~ path("test") {
-          complete("<h1>test success</h1>")
+          complete("<body><h1>test</h1></body>")
         } ~ path("testelastic") {
           complete(Http().singleRequest(HttpRequest(GET, uri = "http://elasticsearch:9200")))
         } ~ path("testredis") {
           onSuccess(WebAction.processAction(TestRedis())) { x =>
-            complete(s"<h1>$x</h1>")
+            complete(s"<body><h1>$x</h1></body>")
           }
         }
 
