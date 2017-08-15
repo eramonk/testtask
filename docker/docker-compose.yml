@@ -3,7 +3,7 @@ services:
   redis:
     image: redis:latest
 #    container_name: redis
-    network_mode: "host"
+#    network_mode: "host"
 #    ports:
 #          - 6379:6379
 #    expose:
@@ -15,7 +15,7 @@ services:
 #      - "9050"
     ports:
       - 9050:9050
-    network_mode: "host"
+#    network_mode: "host"
 
   elasticsearch:
     image: elasticsearch
@@ -32,9 +32,9 @@ services:
 #    mem_limit: 1g
     volumes:
       - esdata1:/usr/share/elasticsearch/data
-    network_mode: "host"
-#    expose:
-#       - "9200"
+#    network_mode: "host"
+    expose:
+       - "9200"
 #    ports:
 #      - 9200:9200
 #      - 9300:9300
