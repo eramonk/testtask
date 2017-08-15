@@ -73,7 +73,7 @@ object Server extends Directives with JsonSupport {
         } ~ path("test") {
           complete("<h1>test success</h1>")
         } ~ path("testelastic") {
-          complete(Http().singleRequest(HttpRequest(GET, uri = "http://127.0.0.1:9200")))
+          complete(Http().singleRequest(HttpRequest(GET, uri = "elasticsearch:9200")))
         } ~ path("testredis") {
           onSuccess(WebAction.processAction(TestRedis())) { x =>
             complete(s"<h1>$x</h1>")

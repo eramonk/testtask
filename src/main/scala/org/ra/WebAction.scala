@@ -54,7 +54,7 @@ object WebAction {
   def processAction(task: TaskAction): Future[Object] = task match {
 
     case TestRedis() => {
-      val r = new RedisClient("localhost", 6379)
+      val r = new RedisClient("redis", 6379)
       Future(r.ping)
     }
 
