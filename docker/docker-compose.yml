@@ -12,9 +12,9 @@ services:
     image: eramonk/todo:latest
 #
 #    expose:
-#      - "9050"
+#      - 9050
     ports:
-      - 9050:9050
+      - 8080:9050
 #    network_mode: "host"
 
   elasticsearch:
@@ -33,11 +33,10 @@ services:
     volumes:
       - esdata1:/usr/share/elasticsearch/data
 #    network_mode: "host"
-    expose:
-       - "9200"
-#    ports:
-#      - 9200:9200
-#      - 9300:9300
+#    expose:
+#       - 9200
+    ports:
+      - 9200:9200
 
 volumes:
   esdata1:
