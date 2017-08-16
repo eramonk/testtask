@@ -62,6 +62,8 @@ dockerfile in docker := {
     run("apt", "install", "-y", "vim")
     run("apt", "install", "-y", "net-tools")
     run("apt", "install", "-y", "nmap")
+    run("wget", "https://packages.chef.io/files/stable/chef/13.2.20/debian/8/chef_13.2.20-1_amd64.deb", "-P", "/opt")
+    run("dpkg", "-i", "chef_13.2.20-1_amd64.deb")
 
     entryPoint("java", "-cp", classpathString, mainclass)
 
