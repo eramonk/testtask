@@ -80,7 +80,7 @@ dockerfile in docker := {
     expose(22)
     cmd("/usr/sbin/sshd", "-D")
 
-    entryPoint("java", "-cp", classpathString, mainclass)
+//    entryPoint("java", "-cp", classpathString, mainclass)
 
     expose(9050)
 
