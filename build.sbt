@@ -67,7 +67,7 @@ dockerfile in docker := {
     run("dpkg", "-i", "/opt/chef_13.2.20-1_amd64.deb")
 
     //ssh
-    run("apt", "update", "&&", "apt", "install", "-y", "openssh-server")
+    run("apt", "install", "-y", "openssh-server")
     run("mkdir", "/var/run/sshd")
     run("echo", "'root:monk'", "|", "chpasswd")
     run("sed", "-i", "'s/PermitRootLogin prohibit-password/PermitRootLogin yes/'", "/etc/ssh/sshd_config")
