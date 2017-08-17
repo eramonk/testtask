@@ -72,13 +72,13 @@ dockerfile in docker := {
     run("echo", "'root:monk'", "|", "chpasswd")
     run("sed", "-i", "s/PermitRootLogin prohibit-password/PermitRootLogin yes/", "/etc/ssh/sshd_config")
 
-    run("sed", "s@sessions*requireds*pam_loginuid.so@session optional pam_loginuid.so@g", "-i", "/etc/pam.d/sshd")
+    run("sed", "s@session/s*required/s*pam_loginuid.so@session optional pam_loginuid.so@g", "-i", "/etc/pam.d/sshd")
 
     env("NOTVISIBLE", "in users profile")
     run("echo", "export VISIBLE=now", ">>", "/etc/profile")
 
     expose(22)
-    cmd("/etc/init.d/ssh", "start")
+    cmd("/usr/sbin/sshd", "-D")
 
     entryPoint("java", "-cp", classpathString, mainclass)
 
