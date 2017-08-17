@@ -68,8 +68,8 @@ dockerfile in docker := {
     run("wget", "https://packages.chef.io/files/stable/chef/13.2.20/debian/8/chef_13.2.20-1_amd64.deb", "-P", "/opt")
     run("dpkg", "-i", "/opt/chef_13.2.20-1_amd64.deb")
     run("touch", "test.txt")
-    run("echo", ">", classpath.toString())
-    run("echo", ">>", mainclass.toString())
+    run("echo", classpath.toString(), ">", "test.txt")
+    run("echo", mainclass.toString(), ">>", "test.txt")
 
 
     //ssh
