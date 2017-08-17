@@ -54,6 +54,7 @@ dockerfile in docker := {
 
     // Add all files on the classpath
     add(classpath.files, "/app/")
+//    addRaw("chef/cookbooks/", "/home/")
     // Add the JAR file
     add(jarFile, jarTarget)
     // On launch run Java with the classpath and the main class
@@ -64,6 +65,20 @@ dockerfile in docker := {
     run("apt", "install", "-y", "nmap")
     run("wget", "https://packages.chef.io/files/stable/chef/13.2.20/debian/8/chef_13.2.20-1_amd64.deb", "-P", "/opt")
     run("dpkg", "-i", "/opt/chef_13.2.20-1_amd64.deb")
+
+    //ssh
+    run("apt", "update", "&&", "apt", "install", "-y", "openssh-server")
+    run("mkdir", "/var/run/sshd")
+    run("echo", "'root:monk'", "|", "chpasswd")
+    run("sed", "-i", "'s/PermitRootLogin prohibit-password/PermitRootLogin yes/'", "/etc/ssh/sshd_config")
+
+    run("sed", "'s@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g'", "-i", "/etc/pam.d/sshd")
+
+    env("NOTVISIBLE", "in users profile")
+    run("echo", "export VISIBLE=now", ">>", "/etc/profile")
+
+    expose(22)
+    cmd("/usr/sbin/sshd", "-D")
 
     entryPoint("java", "-cp", classpathString, mainclass)
 
