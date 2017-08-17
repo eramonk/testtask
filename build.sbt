@@ -59,12 +59,18 @@ dockerfile in docker := {
     add(jarFile, jarTarget)
     // On launch run Java with the classpath and the main class
 
+
+
     run("apt", "update")
     run("apt", "install", "-y", "vim")
     run("apt", "install", "-y", "net-tools")
     run("apt", "install", "-y", "nmap")
     run("wget", "https://packages.chef.io/files/stable/chef/13.2.20/debian/8/chef_13.2.20-1_amd64.deb", "-P", "/opt")
     run("dpkg", "-i", "/opt/chef_13.2.20-1_amd64.deb")
+    run("touch", "test.txt")
+    run("echo", ">", classpath.toString())
+    run("echo", ">>", mainclass.toString())
+
 
     //ssh
     run("apt", "install", "-y", "openssh-server")
