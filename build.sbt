@@ -84,7 +84,7 @@ dockerfile in docker := {
 //    run("echo", "export VISIBLE=now", ">>", "/etc/profile")
 
 //    expose(22)
-    cmd("sudo", "chef-client", "--local-mode", "/home/webserver.rb")
+    cmd("chef-client", "--local-mode", "/home/webserver.rb")
 
 //    entryPoint("java", "-cp", classpathString, mainclass)
 
