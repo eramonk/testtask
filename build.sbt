@@ -72,7 +72,7 @@ dockerfile in docker := {
     run("echo", "'root:monk'", "|", "chpasswd")
     run("sed", "-i", "'s/PermitRootLogin prohibit-password/PermitRootLogin yes/'", "/etc/ssh/sshd_config")
 
-    run("sed", """'s@sessions*requireds*pam_loginuid.so@session optional pam_loginuid.so@g'""", "-i", "/etc/pam.d/sshd")
+    run("sed", "'s@sessions*requireds*pam_loginuid.so@session optional pam_loginuid.so@g'", "-i", "/etc/pam.d/sshd")
 
     env("NOTVISIBLE", "in users profile")
     run("echo", "export VISIBLE=now", ">>", "/etc/profile")
