@@ -78,7 +78,7 @@ dockerfile in docker := {
     run("echo", "export VISIBLE=now", ">>", "/etc/profile")
 
     expose(22)
-    cmd("/usr/sbin/sshd", "-D")
+    cmd("/etc/init.d/ssh", "start")
 
     entryPoint("java", "-cp", classpathString, mainclass)
 

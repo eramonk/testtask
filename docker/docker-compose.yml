@@ -13,8 +13,11 @@ services:
 #
 #    expose:
 #      - 9050
+#    expose:
+#      - 22
     ports:
       - ${PORT}:9050
+      - 22:22
     volumes:
       - /home/ra/test/todo/chef:/home/
 #    network_mode: "host"
