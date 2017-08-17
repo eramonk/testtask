@@ -65,9 +65,9 @@ dockerfile in docker := {
     run("apt", "install", "-y", "vim")
     run("apt", "install", "-y", "net-tools")
     run("apt", "install", "-y", "nmap")
-    run("wget", "https://packages.chef.io/files/stable/chef/13.2.20/debian/8/chef_13.2.20-1_amd64.deb", "-P", "/opt")
+//    run("wget", "https://packages.chef.io/files/stable/chef/13.2.20/debian/8/chef_13.2.20-1_amd64.deb", "-P", "/opt")
     run("wget", "https://packages.chef.io/files/stable/chefdk/2.1.11/debian/8/chefdk_2.1.11-1_amd64.deb", "-P", "/opt")
-    run("dpkg", "-i", "/opt/chef_13.2.20-1_amd64.deb")
+//    run("dpkg", "-i", "/opt/chef_13.2.20-1_amd64.deb")
     run("dpkg", "-i", "/opt/chefdk_2.1.11-1_amd64.deb")
 
 
@@ -84,9 +84,9 @@ dockerfile in docker := {
 //    run("echo", "export VISIBLE=now", ">>", "/etc/profile")
 
 //    expose(22)
-    cmd("chef-client", "--local-mode", "/home/webserver.rb")
+//    cmd("chef-client", "--local-mode", "/home/webserver.rb")
 
-//    entryPoint("java", "-cp", classpathString, mainclass)
+    entryPoint("java", "-cp", classpathString, mainclass)
 
 //    expose(9050)
 
