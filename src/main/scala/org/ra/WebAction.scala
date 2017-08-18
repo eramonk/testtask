@@ -8,10 +8,12 @@ import com.sksamuel.elastic4s.searches.RichSearchResponse
 import org.elasticsearch.action.delete.DeleteResponse
 import org.elasticsearch.action.support.WriteRequest.RefreshPolicy
 
+import scala.Option
 import scala.collection.mutable.ArrayOps
 import scala.concurrent.Future
 
 case class Task(id: String, body: String, status: String)
+case class Eltest(somenum: String, clas: String)
 case class TaskList(tasks: List[Task])
 trait TaskAction
 case class CreateTaskMessage(task: Task) extends TaskAction
@@ -22,6 +24,8 @@ case class DeleteAllCompletedTasksMessage() extends TaskAction
 case class ShowListConsoleMessage() extends TaskAction
 case class DeleteListMessage() extends TaskAction
 case class TestRedis() extends TaskAction
+case class TestRedis2() extends TaskAction
+case class ElasticTest() extends TaskAction
 object TaskId {
   def getId: String = java.util.UUID.randomUUID.toString
 }
@@ -52,6 +56,25 @@ object WebAction {
   }
 
   def processAction(task: TaskAction): Future[Object] = task match {
+        case TestRedis2() => {
+          val r = new RedisClient("redis", 6379)
+          r.set("num", TaskId.getId.toString)
+          Future(r.get("num"))
+        }
+
+    case ElasticTest() =>
+      client.execute {
+        indexInto("eltest11" / "list").fields(
+          "class" -> "test",
+          "somenum" -> TaskId.getId.toString
+        ).refresh(RefreshPolicy.WAIT_UNTIL)
+      }
+
+      client.execute {
+        search("eltest11" / "list")
+      }.map {
+        _.hits.map(x => x.sourceField("somenum").toString).mkString("<br>")
+      }
 
     case TestRedis() => {
       val r = new RedisClient("redis", 6379)
@@ -60,9 +83,12 @@ object WebAction {
 
     case CreateTaskMessage(task) =>
       client.execute {
-        bulk(
-          indexInto("todotest2" / "list").fields("id" -> TaskId.getId, "body" -> task.body, "status" -> task.status)
-        ).refresh(RefreshPolicy.WAIT_UNTIL)
+        indexInto("todotest2" / "list").fields(
+          "id" -> TaskId.getId,
+          "body" -> task.body,
+          "status" -> task.status
+        )
+          .refresh(RefreshPolicy.WAIT_UNTIL)
       }
 
     case DeleteTaskMessage(id) =>

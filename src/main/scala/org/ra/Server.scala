@@ -8,7 +8,7 @@ import scala.io.StdIn
 import akka.http.scaladsl.server.directives._
 import ContentTypeResolver.Default
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import akka.http.scaladsl.model.HttpRequest
+import akka.http.scaladsl.model.{ ContentTypes, HttpEntity, HttpRequest }
 import akka.http.scaladsl.server.Directives
 import spray.json.{ DefaultJsonProtocol, RootJsonFormat }
 
@@ -71,15 +71,22 @@ object Server extends Directives with JsonSupport {
             complete(WebAction.showTasks())
           }
         } ~ path("test") {
-          complete("<body><h1>test</h1></body>")
+          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<body><h1>Test</h1></body>"))
         } ~ path("testelastic") {
           complete(Http().singleRequest(HttpRequest(GET, uri = "http://elasticsearch:9200")))
         } ~ path("testredis") {
           onSuccess(WebAction.processAction(TestRedis())) { x =>
-            complete(s"<body><h1>$x</h1></body>")
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"<body><h1>$x</h1></body>"))
+          }
+        } ~ path("eltest") {
+          onSuccess(WebAction.processAction(ElasticTest())) { x =>
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"<body><h1>$x</h1></body>"))
+          }
+        } ~ path("ratest") {
+          onSuccess(WebAction.processAction(TestRedis2())) { x =>
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"<body><h1>$x</h1></body>"))
           }
         }
-
       }
 
     val bindingFuture = Http().bindAndHandle(route, "0.0.0.0", 9050)

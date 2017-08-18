@@ -33,7 +33,7 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka"      %% "akka-stream"              % akkaVersion,
       "com.typesafe.akka"      %% "akka-http-testkit"        % akkaHttpVersion    % Test,
       "org.scalatest"          %% "scalatest"                % "3.0.1"            % Test
-      //"org.scala-js"           %%% "scalajs-dom"             % "0.9.1",
+//      "org.scala-js"           %%% "scalajs-dom"             % "0.9.1"
     ),
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoPackage := "org.ra.build"
@@ -46,32 +46,20 @@ dockerfile in docker := {
   val classpath = (managedClasspath in Compile).value
   val mainclass = mainClass.in(Compile, packageBin).value.getOrElse(sys.error("Expected exactly one main class"))
   val jarTarget = s"/app/${jarFile.getName}"
-  // Make a colon separated classpath with the JAR file
   val classpathString = classpath.files.map("/app/" + _.getName).mkString(":") + ":" + jarTarget
+
   new Dockerfile {
-    // Base image
     from("java:8")
-
-    // Add all files on the classpath
     add(classpath.files, "/app/")
-//    addRaw("chef/cookbooks/", "/home/")
-    // Add the JAR file
     add(jarFile, jarTarget)
-    // On launch run Java with the classpath and the main class
-
-
 
     run("apt", "update")
     run("apt", "install", "-y", "vim")
     run("apt", "install", "-y", "net-tools")
     run("apt", "install", "-y", "nmap")
-//    run("wget", "https://packages.chef.io/files/stable/chef/13.2.20/debian/8/chef_13.2.20-1_amd64.deb", "-P", "/opt")
     run("wget", "https://packages.chef.io/files/stable/chefdk/2.1.11/debian/8/chefdk_2.1.11-1_amd64.deb", "-P", "/opt")
-//    run("dpkg", "-i", "/opt/chef_13.2.20-1_amd64.deb")
     run("dpkg", "-i", "/opt/chefdk_2.1.11-1_amd64.deb")
 
-
-//
 //    //ssh
 //    run("apt", "install", "-y", "openssh-server")
 //    run("mkdir", "/var/run/sshd")
@@ -80,15 +68,10 @@ dockerfile in docker := {
 //    run("sed", "s@session/s*required/s*pam_loginuid.so@session optional pam_loginuid.so@g", "-i", "/etc/pam.d/sshd")
 //    env("NOTVISIBLE", "in users profile")
 //    run("echo", "export VISIBLE=now", ">>", "/etc/profile")
-
 //    expose(22)
 //    cmd("chef-client", "--local-mode", "/home/webserver.rb")
 
     entryPoint("java", "-cp", classpathString, mainclass)
-
-//    expose(9050)
-
-
   }
 }
 
