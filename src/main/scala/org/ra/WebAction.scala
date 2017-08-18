@@ -2,11 +2,13 @@ package org.ra
 
 import com.redis.RedisClient
 import com.sksamuel.elastic4s.http.HttpClient
+import com.sksamuel.elastic4s.http._
 import com.sksamuel.elastic4s.{ ElasticClient, ElasticsearchClientUri, TcpClient }
 import org.elasticsearch.common.settings.Settings
 import com.sksamuel.elastic4s.searches.RichSearchResponse
 import org.elasticsearch.action.delete.DeleteResponse
 import org.elasticsearch.action.support.WriteRequest.RefreshPolicy
+import com.sksamuel.elastic4s.http.HttpExecutable
 
 import scala.Option
 import scala.collection.mutable.ArrayOps
@@ -37,6 +39,7 @@ object WebAction {
 
   val client: ElasticClient = TcpClient.transport(ElasticsearchClientUri("127.0.0.1", 9300))
   //val client2 = HttpClient(ElasticsearchClientUri("localhost", 9200))
+//  val client2: HttpClient = HttpClient(ElasticsearchClientUri("127.0.0.1", 9200))
 
   def showTasks(): TaskList = {
 
@@ -56,12 +59,13 @@ object WebAction {
   }
 
   def processAction(task: TaskAction): Future[Object] = task match {
+
     case TestRedis2() => {
       val r = new RedisClient("redis", 6379)
       val rq2: Option[String] = r.get("num")
       Future(rq2 match {
         case Some(num) => {
-          r.set("num", num + 1)
+          r.set("num", num.toInt + 1)
           num.toString
         }
         case None => {
@@ -71,19 +75,19 @@ object WebAction {
       })
     }
 
-    case ElasticTest() =>
-      client.execute {
-        indexInto("eltest11" / "list").fields(
-          "class" -> "test",
-          "somenum" -> TaskId.getId.toString
-        ).refresh(RefreshPolicy.WAIT_UNTIL)
-      }
-
-      client.execute {
-        search("eltest11" / "list")
-      }.map {
-        _.hits.map(x => x.sourceField("somenum").toString).mkString("<br>")
-      }
+//    case ElasticTest() =>
+//      client2.execute {
+//        indexInto("eltest11" / "list").fields(
+//          "class" -> "test",
+//          "somenum" -> TaskId.getId.toString
+//        ).refresh(RefreshPolicy.WAIT_UNTIL)
+//      }
+//
+//      client.execute {
+//        search("eltest11" / "list")
+//      }.map {
+//        _.hits.map(x => x.sourceField("somenum").toString).mkString("<br>")
+//      }
 
     case TestRedis() => {
       val r = new RedisClient("redis", 6379)
