@@ -12,6 +12,7 @@ services:
 
   elasticsearch:
     image: elasticsearch
+
     ports:
       - 9200:9200
       - 9300:9300
@@ -33,6 +34,7 @@ services:
 #      - 9200:9200
 #      - 9300:9300
 
+volumes:
   esdata1:
     driver: local
 

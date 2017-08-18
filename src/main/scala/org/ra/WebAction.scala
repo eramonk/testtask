@@ -39,7 +39,7 @@ object WebAction {
 
   val client: ElasticClient = TcpClient.transport(ElasticsearchClientUri("127.0.0.1", 9300))
   //val client2 = HttpClient(ElasticsearchClientUri("localhost", 9200))
-//  val client2: HttpClient = HttpClient(ElasticsearchClientUri("127.0.0.1", 9200))
+  //  val client2: HttpClient = HttpClient(ElasticsearchClientUri("127.0.0.1", 9200))
 
   def showTasks(): TaskList = {
 
@@ -69,25 +69,25 @@ object WebAction {
           num.toString
         }
         case None => {
-          r.set("num", 0)
+          r.set("num", 1)
           "0"
         }
       })
     }
 
-//    case ElasticTest() =>
-//      client2.execute {
-//        indexInto("eltest11" / "list").fields(
-//          "class" -> "test",
-//          "somenum" -> TaskId.getId.toString
-//        ).refresh(RefreshPolicy.WAIT_UNTIL)
-//      }
-//
-//      client.execute {
-//        search("eltest11" / "list")
-//      }.map {
-//        _.hits.map(x => x.sourceField("somenum").toString).mkString("<br>")
-//      }
+    //    case ElasticTest() =>
+    //      client2.execute {
+    //        indexInto("eltest11" / "list").fields(
+    //          "class" -> "test",
+    //          "somenum" -> TaskId.getId.toString
+    //        ).refresh(RefreshPolicy.WAIT_UNTIL)
+    //      }
+    //
+    //      client.execute {
+    //        search("eltest11" / "list")
+    //      }.map {
+    //        _.hits.map(x => x.sourceField("somenum").toString).mkString("<br>")
+    //      }
 
     case TestRedis() => {
       val r = new RedisClient("redis", 6379)
