@@ -56,11 +56,20 @@ object WebAction {
   }
 
   def processAction(task: TaskAction): Future[Object] = task match {
-        case TestRedis2() => {
-          val r = new RedisClient("redis", 6379)
-          r.set("num", TaskId.getId.toString)
-          Future(r.get("num"))
+    case TestRedis2() => {
+      val r = new RedisClient("redis", 6379)
+      val rq2: Option[String] = r.get("num")
+      Future(rq2 match {
+        case Some(num) => {
+          r.set("num", num + 1)
+          num.toString
         }
+        case None => {
+          r.set("num", 0)
+          "0"
+        }
+      })
+    }
 
     case ElasticTest() =>
       client.execute {
