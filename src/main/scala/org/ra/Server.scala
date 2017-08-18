@@ -82,7 +82,7 @@ object Server extends Directives with JsonSupport {
           onSuccess(WebAction.processAction(ElasticTest())) { x =>
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"<body><h1>$x</h1></body>"))
           }
-        } ~ path("ratest") {
+        } ~ path("retest") {
           onSuccess(WebAction.processAction(TestRedis2())) { x =>
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"<body><h1>$x</h1></body>"))
           }
