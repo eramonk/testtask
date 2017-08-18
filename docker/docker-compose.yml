@@ -7,15 +7,9 @@ services:
     image: eramonk/todo:latest
     ports:
       - ${PORT}:9050
+      - 8088:80
     volumes:
       - /home/ra/test/todo/chef:/home/
-
-  elasticsearch:
-    image: elasticsearch
-
-    ports:
-      - 9200:9200
-      - 9300:9300
 
   elasticsearch:
     image: elasticsearch
