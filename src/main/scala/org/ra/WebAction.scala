@@ -38,8 +38,7 @@ object WebAction {
   import scala.concurrent.ExecutionContext.Implicits.global
 
   val client: ElasticClient = TcpClient.transport(ElasticsearchClientUri("127.0.0.1", 9300))
-  //val client2 = HttpClient(ElasticsearchClientUri("localhost", 9200))
-  //  val client2: HttpClient = HttpClient(ElasticsearchClientUri("127.0.0.1", 9200))
+
 
   def showTasks(): TaskList = {
 
