@@ -29,10 +29,7 @@ test redis with count => http://localhost:{PORT}/retest
 
 test apache =>
 
-docker exec -i {prefix name}_myapp_1 bash <<EOF\n
-curl localhost\n
-exit\n
-EOF
+./docker/testapache.sh {prefix name}
 
 
 
