@@ -10,7 +10,7 @@ services:
       - 8088:80
     volumes:
       - /home/ra/test/todo/chef:/home/
-      - /home/ra/test/todo/docker/init.sh:/home/
+      - /home/ra/test/todo/docker/init.sh:/home/init.sh
 
   elasticsearch:
     image: elasticsearch

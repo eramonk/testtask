@@ -18,13 +18,12 @@ test redis => http://localhost:{PORT}/testredis,
 
 test redis with count => http://localhost:{PORT}/retest
 
+в контейнер {prefix name}_myapp_1 биндится папка с рецептом webserver.rb который устанавливает и запускает
+сервер Apache. Рецепт запускается при создании контейнера с помощью скрипта init.sh.
 
-команда применения рецепта внутри контейнера
+команда применения рецепта внутри запущенного контейнера
 
-./chef/chef-client.sh {prefix name}_myapp_1 webserver.rb
-
-в контейнер {prefix name}_myapp_1 биндится папка с рецептом webserver.rb которы который устанавливает и запускает
-сервер Apache.
+./chef/chef-client.sh {prefix name}_myapp_1 {recipe}
 
 test apache => http://localhost:8088/
 
