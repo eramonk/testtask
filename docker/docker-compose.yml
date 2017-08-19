@@ -2,12 +2,14 @@ version: '3'
 services:
   redis:
     image: redis:latest
+    volumes:
+      - redata:/data
 
   myapp:
     image: eramonk/todo:latest
     ports:
       - ${PORT}:9050
-      - 8088:80
+#      - 8088:80
     volumes:
       - /home/ra/test/todo/chef:/home/
       - /home/ra/test/todo/docker/init.sh:/home/init.sh
@@ -25,14 +27,13 @@ services:
         hard: -1
     volumes:
       - esdata:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-      - 9300:9300
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
 
 volumes:
   esdata:
     driver: local
-
-
-
+  redata:
+    driver: local
 
