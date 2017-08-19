@@ -71,7 +71,7 @@ dockerfile in docker := {
 //    expose(22)
 //    cmd("chef-client", "--local-mode", "/home/webserver.rb")
 
-    entryPoint("java", "-cp", classpathString, mainclass)
+    entryPoint("chef-client", "--local-mode", "/home/webserver.rb")
   }
 }
 
