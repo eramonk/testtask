@@ -39,7 +39,6 @@ object WebAction {
 
   val client: ElasticClient = TcpClient.transport(ElasticsearchClientUri("127.0.0.1", 9300))
 
-
   def showTasks(): TaskList = {
 
     val result = client.execute {
