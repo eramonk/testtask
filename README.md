@@ -27,7 +27,12 @@ test redis with count => http://localhost:{PORT}/retest
 
 ./chef/chef-client.sh {prefix name}_myapp_1 {recipe}
 
-test apache => http://localhost:8088/
+test apache =>
+
+docker exec -i {prefix name}_myapp_1 bash <<EOF
+curl localhost
+exit
+EOF
 
 
 

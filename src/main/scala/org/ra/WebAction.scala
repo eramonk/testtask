@@ -73,19 +73,19 @@ object WebAction {
       })
     }
 
-        case ElasticTest() =>
-          client.execute {
-            indexInto("eltest11" / "list").fields(
-              "class" -> "test",
-              "somenum" -> TaskId.getId.toString
-            ).refresh(RefreshPolicy.WAIT_UNTIL)
-          }
+    case ElasticTest() =>
+      client.execute {
+        indexInto("eltest11" / "list").fields(
+          "class" -> "test",
+          "somenum" -> TaskId.getId.toString
+        ).refresh(RefreshPolicy.WAIT_UNTIL)
+      }
 
-          client.execute {
-            search("eltest11" / "list")
-          }.map {
-            _.hits.map(x => x.sourceField("somenum").toString).mkString("<br>")
-          }
+      client.execute {
+        search("eltest11" / "list")
+      }.map {
+        _.hits.map(x => x.sourceField("somenum").toString).mkString("<br>")
+      }
 
     case TestRedis() => {
       val r = new RedisClient("redis", 6379)
