@@ -1,10 +1,10 @@
 # todo
 
-запуск связки контейнеров из директории docker/
+запуск кластера контейнеров из директории docker/
 
 ./start.sh {prefix name} {PORT}
 
-команды управлея связками
+управление кластером
 
 docker-compose -p {prefix name} stop
 
@@ -21,15 +21,17 @@ test redis => http://localhost:{PORT}/testredis,
 test redis with count => http://localhost:{PORT}/retest
 
 в контейнер {prefix name}_myapp_1 биндится папка с рецептом webserver.rb который устанавливает и запускает
-сервер Apache. Рецепт запускается при создании контейнера с помощью скрипта init.sh.
-
-команда применения рецепта внутри запущенного контейнера
-
-./chef/chef-client.sh {prefix name}_myapp_1 {recipe}
+сервер Apache. Рецепт запускается при создании контейнера скриптом init.sh.
 
 test apache =>
 
 ./docker/testapache.sh {prefix name}
+
+применение рецепта внутри запущенного контейнера
+
+./chef/chef-client.sh {prefix name}_myapp_1 {recipe}
+
+
 
 
 
