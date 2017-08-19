@@ -12,6 +12,8 @@ docker-compose -p {prefix name} start
 
 docker-compose -p {prefix name} down (остановить и удалить)
 
+docker-compose -p {prefix name} down -v (остановить и удалить вместе с данными)
+
 test elastic => http://localhost:{PORT}/testelastic
 
 test redis => http://localhost:{PORT}/testredis,
